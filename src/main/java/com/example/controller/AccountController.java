@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Service.AccountService;
 import com.example.model.Account;
 
-@RestController
-@RequestMapping("/account")
+@RestController("/compte")
 public class AccountController {
 	@Autowired
 	private AccountService accountService;
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/account/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Account> getAccountById(@PathVariable("id") final Long accountId) {
 		Account searchedAccount = accountService.getAccount(accountId);
 		return new ResponseEntity<>(searchedAccount, HttpStatus.OK);

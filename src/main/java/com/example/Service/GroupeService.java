@@ -19,5 +19,5 @@ public interface GroupeService {
 
 	public List<Groupe> getAllGroupes();
 
-	void affecterAgentToGroupe(Groupe groupe, Agent agent);
+	boolean affecterAgentToGroupe(Groupe groupe, Agent agent);
 }

@@ -4,27 +4,30 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 @Entity
-@EntityListeners(value = { AuditingEntityListener.class })
 public class Ressource {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
+	private long idRessource;
 	@Column(name = "x")
 	private String x;
-	
 	@Column(name = "date_creation")
-	@CreatedDate
 	private Date dateCreation;
-	
 	@Column(name = "date_fin")
 	private Date dateFin;
-
+	/**
+	 * @param idRessource
+	 * @param x
+	 * @param dateDeCreation
+	 * @param dateFin
+	 */
+	public Ressource(long idRessource, String x, Date dateDeCreation, Date dateFin) {
+		super();
+		this.idRessource = idRessource;
+		this.x = x;
+		this.dateCreation = dateDeCreation;
+		this.dateFin = dateFin;
+	}
 	/**
 	 * 
 	 */
@@ -35,8 +38,14 @@ public class Ressource {
 	/**
 	 * @return the idRessources
 	 */
-	public Long getId() {
-		return id;
+	public long getIdRessource() {
+		return idRessource;
+	}
+	/**
+	 * @param idRessources the idRessources to set
+	 */
+	public void setIdRessource(long idRessourc) {
+		this.idRessource = idRessource;
 	}
 	/**
 	 * @return the x

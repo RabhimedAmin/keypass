@@ -11,36 +11,6 @@ public class Agent {
 	private String Agentname;
 	@Column(name = "Function")
 	private String function;
-	private boolean admin = false;
-
-	/**
-	 * @return the admin
-	 */
-	public boolean isAdmin() {
-		return admin;
-	}
-
-	/**
-	 * @param admin
-	 *            the admin to set
-	 */
-	public void setAdmin(boolean admin) {
-		this.admin = admin;
-	}
-
-	/**
-	 * @param cin
-	 * @param agentname
-	 * @param function
-	 * @param admin
-	 */
-	public Agent(long cin, String agentname, String function, boolean admin) {
-		super();
-		this.cin = cin;
-		Agentname = agentname;
-		this.function = function;
-		this.admin = admin;
-	}
 
 	/**
 	 * 
@@ -49,9 +19,18 @@ public class Agent {
 		super();
 	}
 
+	public Agent(long cin, String agentname, String function) {
+		super();
+		this.cin = cin;
+		Agentname = agentname;
+		this.function = function;
+	}
+
 	public long getCin() {
 		return cin;
 	}
+
+	
 
 	public String getAgentname() {
 		return Agentname;
@@ -70,11 +49,12 @@ public class Agent {
 	}
 
 	/**
-	 * @param cin
-	 *            the cin to set
+	 * @param cin the cin to set
 	 */
 	public void setCin(long cin) {
 		this.cin = cin;
 	}
+
+	
 
 }
