@@ -32,10 +32,17 @@ public class GroupeServiceImpl implements GroupeService {
 	}
 
 	@Override
-	public boolean affecterAgentToGroupe(Groupe groupe, Agent agent) {
-		if(groupe.getAgentList().contains(agent)){
-				return true;}
-		return false;
+	public void affecterAgentToGroupe(Groupe groupe, Agent agent) {
+		boolean exist = false;
+		if (groupe.getAgentList().contains(agent)) {
+			exist = true;
+		}
+
+		if (exist = false) {
+			groupe.getAgentList().add(agent);
+
+		}
+
 	}
 
 	@Override

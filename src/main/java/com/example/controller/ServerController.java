@@ -16,6 +16,7 @@ import com.example.Service.ServerService;
 import com.example.model.Server;
 
 @RestController
+@RequestMapping("/server")
 public class ServerController {
 
 	@Autowired
@@ -40,20 +41,20 @@ public class ServerController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/server", method = RequestMethod.POST)
+	@RequestMapping(value = "/server/{id}", method = RequestMethod.POST)
 	public String createServer(Server server) {
 		serverService.createServer(server);
 		return "redirect:/server/" + server.getId();
 	}
 
-	@RequestMapping(value = "/ser/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/server/{id}", method = RequestMethod.PUT)
 	public String update(Server server) {
 		serverService.modifyServer(server);
 		return "redirect:/server/" + server.getId();
 
 	}
 
-	@RequestMapping(value = "/serv/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/server/{id}", method = RequestMethod.DELETE)
 	public String delete(@PathVariable long id) {
 		serverService.deleteServer(id);
 		return "redirect:/servers";

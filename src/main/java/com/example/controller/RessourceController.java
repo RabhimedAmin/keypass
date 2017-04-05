@@ -14,12 +14,13 @@ import com.example.Service.RessourceService;
 
 import com.example.model.Ressource;
 
-@RestController("/ressource")
+@RestController
+@RequestMapping("/ressource")
 public class RessourceController {
 	@Autowired
 	private RessourceService ressourceService;
 
-	@RequestMapping(value = "/ressource/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Ressource> getRessourceById(@PathVariable("id") final Long ressourceId) {
 		Ressource searchedressource = ressourceService.getRessource(ressourceId);
 		return new ResponseEntity<>(searchedressource, HttpStatus.OK);
@@ -35,17 +36,17 @@ public class RessourceController {
 	@RequestMapping(value = "/ressource", method = RequestMethod.POST)
 	public String creatressource(Ressource ressource) {
 		ressourceService.createRessource(ressource);
-		return "redirect:/ressource/" + ressource.getIdRessource();
+		return "redirect:/ressource/" + ressource.getId();
 	}
 
-	@RequestMapping(value = "/ressour/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/ressource/{id}", method = RequestMethod.PUT)
 	public String update(Ressource ressource) {
 		ressourceService.modifyRessource(ressource);
-		return "redirect:/ressource/" + ressource.getIdRessource();
+		return "redirect:/ressource/" + ressource.getId();
 
 	}
 
-	@RequestMapping(value = "/ress/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/ressource/{id}", method = RequestMethod.DELETE)
 	public String delete(@PathVariable long id) {
 		ressourceService.deleteRessource(id);
 		return "redirect:/ressources";

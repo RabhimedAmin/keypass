@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Service.GroupeService;
 import com.example.model.Groupe;
 
-@RestController("/")
+@RestController
+@RequestMapping("/Groupe")
 public class GroupeController {
 	@Autowired
 	private GroupeService groupeService;
@@ -30,20 +31,20 @@ public class GroupeController {
 		return new ResponseEntity<>(searchedgroupe, HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "/groupe/{id}", method = RequestMethod.POST)
 	public String creategroupe(Groupe groupe) {
 		groupeService.createGroupe(groupe);
 		return "redirect:/product/" + groupe.getGroupeId();
 	}
 
-	@RequestMapping(value = "/groupes/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/groupe/{id}", method = RequestMethod.PUT)
 	public String update(Groupe groupe) {
 		groupeService.modifyGroupe(groupe);
 		return "redirect:/groupe/" + groupe.getGroupeId();
 
 	}
 
-	@RequestMapping(value = "/groupea/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/groupe/{id}", method = RequestMethod.DELETE)
 	public String delete(@PathVariable Integer id) {
 		groupeService.deleteGroupe(id);
 		return "redirect:/groupes";

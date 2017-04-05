@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Service.AgentService;
 import com.example.model.Agent;
 
-@RestController("/agent")
+@RestController
 @RequestMapping("/agent")
 public class AgentController {
 	@Autowired
@@ -31,20 +31,20 @@ public class AgentController {
 		return new ResponseEntity<>(searchedAgent, HttpStatus.OK);
 	}
 
-	@RequestMapping( method = RequestMethod.POST)
+	@RequestMapping(value = "/agent/{id}", method = RequestMethod.POST)
 	public String createAgent(Agent agent) {
 		agentService.createAgent(agent);
 		return "redirect:/product/" + agent.getCin();
 	}
 
-	@RequestMapping(value = "/agents/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/agent/{id}", method = RequestMethod.PUT)
 	public String update(Agent agent) {
 		agentService.modifyAgent(agent);
 		return "redirect:/agent/" + agent.getCin();
 
 	}
 
-	@RequestMapping(value="/agenta/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/agent/{id}", method = RequestMethod.DELETE)
 	public String delete(@PathVariable long id) {
 		agentService.deleteAgent(id);
 		return "redirect:/agents";
