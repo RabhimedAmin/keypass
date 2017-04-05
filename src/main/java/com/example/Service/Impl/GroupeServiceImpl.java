@@ -32,12 +32,31 @@ public class GroupeServiceImpl implements GroupeService {
 	}
 
 	@Override
-	public boolean affecterAgentToGroupe(Groupe groupe, Agent agent) {
+	public boolean agentAffectee(Groupe groupe, Agent agent) {
+		
 		if(groupe.getAgentList().contains(agent)){
 				return true;}
-		return false;
+	return false;
 	}
-
+	@Override
+	public Agent affectAgentTOGroupe(Groupe groupe,Agent agent){
+		boolean type=agentAffectee(groupe,agent);
+		if(type=false){
+			groupe.getAgentList().add(agent);
+			return agent;
+		}
+		return null;
+	}
+//	//@Override
+//	public void affecterAgentToGroupe(Groupe groupe, Agent agent) {
+//		boolean type=false;
+//		if(groupe.getAgentList().contains(agent)){
+//				type= true;}
+//	if(type=false){
+//		groupe.getAgentList().add(agent);
+//		}
+//	}
+//	
 	@Override
 	public Groupe getGroupe(long id) {
 		// TODO Auto-generated method stub
@@ -54,5 +73,11 @@ public class GroupeServiceImpl implements GroupeService {
 	public void deleteGroupe(long id) {
 		// TODO Auto-generated method stub
 		agentRepository.delete(id);
+	}
+
+	@Override
+	public void affecterAgentToGroupe(Groupe groupe, Agent agent) {
+		// TODO Auto-generated method stub
+		
 	}
 }
