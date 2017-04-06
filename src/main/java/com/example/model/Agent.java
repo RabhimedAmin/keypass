@@ -4,11 +4,14 @@ import javax.persistence.*;
 
 @Entity
 public class Agent {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long cin;
+	private Long id;
+
 	@Column(name = "Name")
 	private String Agentname;
+
 	@Column(name = "Function")
 	private String function;
 
@@ -19,18 +22,16 @@ public class Agent {
 		super();
 	}
 
-	public Agent(long cin, String agentname, String function) {
+	public Agent(Long id, String agentname, String function) {
 		super();
-		this.cin = cin;
+		this.id = id;
 		Agentname = agentname;
 		this.function = function;
 	}
 
-	public long getCin() {
-		return cin;
+	public long getId() {
+		return id;
 	}
-
-	
 
 	public String getAgentname() {
 		return Agentname;
@@ -48,13 +49,5 @@ public class Agent {
 		this.function = function;
 	}
 
-	/**
-	 * @param cin the cin to set
-	 */
-	public void setCin(long cin) {
-		this.cin = cin;
-	}
-
 	
-
 }

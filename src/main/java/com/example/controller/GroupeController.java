@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,13 +34,13 @@ public class GroupeController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String creategroupe(Groupe groupe) {
 		groupeService.createGroupe(groupe);
-		return "redirect:/product/" + groupe.getGroupeId();
+		return "redirect:/product/" + groupe.getId();
 	}
 
 	@RequestMapping(value = "/groupes/{id}", method = RequestMethod.PUT)
 	public String update(Groupe groupe) {
 		groupeService.modifyGroupe(groupe);
-		return "redirect:/groupe/" + groupe.getGroupeId();
+		return "redirect:/groupe/" + groupe.getId();
 
 	}
 
@@ -48,4 +49,5 @@ public class GroupeController {
 		groupeService.deleteGroupe(id);
 		return "redirect:/groupes";
 	}
+	
 }

@@ -35,13 +35,13 @@ public class RessourceController {
 	@RequestMapping(value = "/ressource", method = RequestMethod.POST)
 	public String creatressource(Ressource ressource) {
 		ressourceService.createRessource(ressource);
-		return "redirect:/ressource/" + ressource.getIdRessource();
+		return "redirect:/ressource/" + ressource.getId();
 	}
 
 	@RequestMapping(value = "/ressour/{id}", method = RequestMethod.PUT)
 	public String update(Ressource ressource) {
 		ressourceService.modifyRessource(ressource);
-		return "redirect:/ressource/" + ressource.getIdRessource();
+		return "redirect:/ressource/" + ressource.getId();
 
 	}
 

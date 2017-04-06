@@ -34,13 +34,13 @@ public class AccountController {
 	@RequestMapping(value = "/account", method = RequestMethod.POST)
 	public String creatAccount(Account account) {
 		accountService.createAccount(account);
-		return "redirect:/account/" + account.getIdcompte();
+		return "redirect:/account/" + account.getId();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public String update(Account account) {
 		accountService.modifyAccount(account);
-		return "redirect:/account/" + account.getIdcompte();
+		return "redirect:/account/" + account.getId();
 
 	}
 

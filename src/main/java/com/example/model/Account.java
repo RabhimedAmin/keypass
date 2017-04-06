@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idcompte;
+	private Long id;
 	@Column(name = "Login")
 	private String login;
 	@Column(name = "password")
@@ -25,21 +25,18 @@ public class Account {
 		super();
 	}
 
-	public Account(long idcompte, String login, String password) {
+	public Account(Long id, String login, String password) {
 		super();
-		this.idcompte = idcompte;
+		this.id = id;
 		this.login = login;
 		this.password = password;
 	}
 
-	public long getIdcompte() {
-		return idcompte;
+	public long getId() {
+		return id;
 	}
 
-	public void setIdcompte(long idcompte) {
-		this.idcompte = idcompte;
-	}
-
+	
 	public String getLogin() {
 		return login;
 	}

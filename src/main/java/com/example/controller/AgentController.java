@@ -34,13 +34,13 @@ public class AgentController {
 	@RequestMapping( method = RequestMethod.POST)
 	public String createAgent(Agent agent) {
 		agentService.createAgent(agent);
-		return "redirect:/product/" + agent.getCin();
+		return "redirect:/product/" + agent.getId();
 	}
 
 	@RequestMapping(value = "/agents/{id}", method = RequestMethod.PUT)
 	public String update(Agent agent) {
 		agentService.modifyAgent(agent);
-		return "redirect:/agent/" + agent.getCin();
+		return "redirect:/agent/" + agent.getId();
 
 	}
 

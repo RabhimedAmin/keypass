@@ -12,7 +12,7 @@ import com.example.model.Groupe;
 import com.example.repository.AgentRepository;
 import com.example.repository.GroupeRepository;
 
-@Service
+@Service("groupeService")
 public class GroupeServiceImpl implements GroupeService {
 	@Autowired
 	private GroupeRepository groupeRepository;
@@ -40,8 +40,7 @@ public class GroupeServiceImpl implements GroupeService {
 	}
 	@Override
 	public Agent affectAgentTOGroupe(Groupe groupe,Agent agent){
-		boolean type=agentAffectee(groupe,agent);
-		if(type=false){
+		if(!agentAffectee(groupe,agent)){
 			groupe.getAgentList().add(agent);
 			return agent;
 		}

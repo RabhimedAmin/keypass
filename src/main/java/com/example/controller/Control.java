@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Service.GroupeService;
 import com.example.Service.ServerService;
 import com.example.model.Agent;
 import com.example.model.Server;
@@ -20,6 +21,9 @@ public class Control {
 
 	@Autowired
 	ServerService serverService;
+	
+	@Autowired
+	private GroupeService groupeService;
 
 	@RequestMapping("/")
 	public String index() {
@@ -46,6 +50,7 @@ public class Control {
 	//@RequestMapping(name = "/server/{id}/affecte", method = RequestMethod.PUT)
 	public ResponseEntity<?> affecteServerToAccounts(@PathVariable("id") Long serverId,
 			@RequestBody List<Long> accountsIds) {
+		//groupeService.affectAgentTOGroupe(groupe, agent);
 		boolean affected = serverService.affecteServerToAccounts(serverId, accountsIds);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
