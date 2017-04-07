@@ -1,10 +1,16 @@
 package com.example.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.*;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Ressource
 {
 	@Id
@@ -14,11 +20,16 @@ public class Ressource
 	@Column(name = "x")
 	private String x;
 	
-	@Column(name = "date_creation")
-	private Date dateCreation;
+	@CreatedDate
+	@Column(name = "creation_date")
+	private LocalDateTime creationDate;
 	
-	@Column(name = "date_fin")
-	private Date dateFin;
+	@LastModifiedDate
+	@Column(name = "modif_date")
+	private LocalDateTime modificationDate;
+	
+	@Column(name = "expiration_date")
+	private LocalDateTime expirationDate;
 	
 	/**
 	 * @param idRessource
@@ -26,14 +37,14 @@ public class Ressource
 	 * @param dateDeCreation
 	 * @param dateFin
 	 */
-	public Ressource(Long id, String x, Date dateDeCreation, Date dateFin)
-	{
-		super();
-		this.id = id;
-		this.x = x;
-		this.dateCreation = dateDeCreation;
-		this.dateFin = dateFin;
-	}
+	// public Ressource(Long id, String x, Date dateDeCreation, Date dateFin)
+	// {
+	// super();
+	// this.id = id;
+	// this.x = x;
+	// this.dateCreation = dateDeCreation;
+	// this.dateFin = dateFin;
+	// }
 	
 	/**
 	 * 
@@ -47,7 +58,7 @@ public class Ressource
 	/**
 	 * @return the idRessources
 	 */
-	public long getId()
+	public Long getId()
 	{
 		return id;
 	}
@@ -68,39 +79,54 @@ public class Ressource
 	{
 		this.x = x;
 	}
-	
+
 	/**
-	 * @return the dateDeCreation
+	 * @return the creationDate
 	 */
-	public Date getDateDeCreation()
+	public LocalDateTime getCreationDate()
 	{
-		return dateCreation;
+		return creationDate;
+	}
+
+	/**
+	 * @param creationDate the creationDate to set
+	 */
+	public void setCreationDate(LocalDateTime creationDate)
+	{
+		this.creationDate = creationDate;
+	}
+
+	/**
+	 * @return the modificationDate
+	 */
+	public LocalDateTime getModificationDate()
+	{
+		return modificationDate;
+	}
+
+	/**
+	 * @param modificationDate the modificationDate to set
+	 */
+	public void setModificationDate(LocalDateTime modificationDate)
+	{
+		this.modificationDate = modificationDate;
+	}
+
+	/**
+	 * @return the expirationDate
+	 */
+	public LocalDateTime getExpirationDate()
+	{
+		return expirationDate;
+	}
+
+	/**
+	 * @param expirationDate the expirationDate to set
+	 */
+	public void setExpirationDate(LocalDateTime expirationDate)
+	{
+		this.expirationDate = expirationDate;
 	}
 	
-	/**
-	 * @param dateDeCreation
-	 *            the dateDeCreation to set
-	 */
-	public void setDateDeCreation(Date dateDeCreation)
-	{
-		this.dateCreation = dateDeCreation;
-	}
-	
-	/**
-	 * @return the dateFin
-	 */
-	public Date getDateFin()
-	{
-		return dateFin;
-	}
-	
-	/**
-	 * @param dateFin
-	 *            the dateFin to set
-	 */
-	public void setDateFin(Date dateFin)
-	{
-		this.dateFin = dateFin;
-	}
 	
 }

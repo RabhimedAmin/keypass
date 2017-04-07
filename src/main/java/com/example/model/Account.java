@@ -25,12 +25,7 @@ public class Account {
 		super();
 	}
 
-	public Account(Long id, String login, String password) {
-		super();
-		this.id = id;
-		this.login = login;
-		this.password = password;
-	}
+	
 
 	public long getId() {
 		return id;

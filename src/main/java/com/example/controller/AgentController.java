@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Service.AgentService;
 import com.example.model.Agent;
 
-@RestController("/agent")
-@RequestMapping("/agent")
+@RestController("/agents")
+@RequestMapping("/agents")
 public class AgentController {
 	@Autowired
 	private AgentService agentService;
@@ -25,7 +26,7 @@ public class AgentController {
 		return new ResponseEntity<>(searchedAgent, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/agents", method = RequestMethod.GET)
+	@RequestMapping( method = RequestMethod.GET)
 	public ResponseEntity<List<Agent>> getAllAgent() {
 		List<Agent> searchedAgent = agentService.getAllAgents();
 		return new ResponseEntity<>(searchedAgent, HttpStatus.OK);
@@ -37,14 +38,14 @@ public class AgentController {
 		return "redirect:/product/" + agent.getId();
 	}
 
-	@RequestMapping(value = "/agents/{id}", method = RequestMethod.PUT)
-	public String update(Agent agent) {
+	@RequestMapping(value = "/agent/{id}", method = RequestMethod.PUT)
+	public String update(@RequestBody Agent agent) {
 		agentService.modifyAgent(agent);
 		return "redirect:/agent/" + agent.getId();
 
 	}
 
-	@RequestMapping(value="/agenta/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value="/agent/{id}", method = RequestMethod.DELETE)
 	public String delete(@PathVariable long id) {
 		agentService.deleteAgent(id);
 		return "redirect:/agents";

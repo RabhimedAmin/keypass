@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Service.AccountService;
 import com.example.model.Account;
 
-@RestController("/compte")
+@RestController("/accounts")
+@RequestMapping("/accounts")
 public class AccountController {
 	@Autowired
 	private AccountService accountService;
@@ -25,20 +27,20 @@ public class AccountController {
 
 	}
 
-	@RequestMapping(value = "/accounts", method = RequestMethod.GET)
+	@RequestMapping( method = RequestMethod.GET)
 	public ResponseEntity<List<Account>> getAllAccounts() {
 		List<Account> searchedAccount = accountService.getAllAccounts();
 		return new ResponseEntity<>(searchedAccount, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/account", method = RequestMethod.POST)
+	@RequestMapping( method = RequestMethod.POST)
 	public String creatAccount(Account account) {
 		accountService.createAccount(account);
 		return "redirect:/account/" + account.getId();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public String update(Account account) {
+	public String update(@RequestBody Account account) {
 		accountService.modifyAccount(account);
 		return "redirect:/account/" + account.getId();
 

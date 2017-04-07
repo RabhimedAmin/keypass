@@ -25,7 +25,7 @@ public class Demande
 	private Agent approber;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "id", nullable = false, updatable = false)
+	@JoinColumn(name = "id_ressource", nullable = false, updatable = false)
 	private Ressource ressource;
 	
 	@CreatedDate
