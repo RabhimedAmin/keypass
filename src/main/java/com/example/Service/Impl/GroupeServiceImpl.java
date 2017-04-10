@@ -13,70 +13,74 @@ import com.example.repository.AgentRepository;
 import com.example.repository.GroupeRepository;
 
 @Service("groupeService")
-public class GroupeServiceImpl implements GroupeService {
+public class GroupeServiceImpl implements GroupeService
+{
 	@Autowired
 	private GroupeRepository groupeRepository;
+	
 	@Autowired
 	private AgentRepository agentRepository;
-
+	
 	@Override
-	public Groupe createGroupe(Groupe groupe) {
+	public Groupe createGroupe(Groupe groupe)
+	{
 		// TODO Auto-generated method stub
 		return groupeRepository.save(groupe);
 	}
-
+	
 	@Override
-	public Groupe modifyGroupe(Groupe groupe) {
+	public Groupe modifyGroupe(Groupe groupe)
+	{
 		// TODO Auto-generated method stub
 		return groupeRepository.save(groupe);
 	}
-
+	
 	@Override
-	public boolean agentAffectee(Groupe groupe, Agent agent) {
+	public boolean agentAffectee(Groupe groupe, Agent agent)
+	{
 		
-		if(groupe.getAgentList().contains(agent)){
-				return true;}
-	return false;
+		if (groupe.getAgentList().contains(agent)) { return true; }
+		return false;
 	}
+	
 	@Override
-	public Agent affectAgentTOGroupe(Groupe groupe,Agent agent){
-		if(!agentAffectee(groupe,agent)){
+	public Agent affectAgentTOGroupe(Groupe groupe, Agent agent)
+	{
+		if (!agentAffectee(groupe, agent))
+		{
 			groupe.getAgentList().add(agent);
 			return agent;
 		}
 		return null;
 	}
-//	//@Override
-//	public void affecterAgentToGroupe(Groupe groupe, Agent agent) {
-//		boolean type=false;
-//		if(groupe.getAgentList().contains(agent)){
-//				type= true;}
-//	if(type=false){
-//		groupe.getAgentList().add(agent);
-//		}
-//	}
-//	
+	
+	public void supprimerAgent(Groupe groupe, Agent agent)
+	{
+		if (agentAffectee(groupe, agent))
+			groupe.getAgentList().remove(agent);
+	}
+	
 	@Override
-	public Groupe getGroupe(long id) {
+	public Groupe getGroupe(long id)
+	{
 		// TODO Auto-generated method stub
 		return groupeRepository.findOne(id);
 	}
-
+	
 	@Override
-	public List<Groupe> getAllGroupes() {
+	public List<Groupe> getAllGroupes()
+	{
 		// TODO Auto-generated method stub
 		return groupeRepository.findAll();
 	}
-
+	
 	@Override
-	public void deleteGroupe(long id) {
+	public void deleteGroupe(long id)
+	{
 		// TODO Auto-generated method stub
-		agentRepository.delete(id);
+		groupeRepository.delete(id);
 	}
 
-	@Override
-	public void affecterAgentToGroupe(Groupe groupe, Agent agent) {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	
 }

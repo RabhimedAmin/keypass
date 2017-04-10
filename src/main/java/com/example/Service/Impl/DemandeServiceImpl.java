@@ -3,11 +3,13 @@ package com.example.Service.Impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.Service.DemandeService;
 import com.example.model.Demande;
 import com.example.repository.DemandeRepository;
 
+@Service("demandeService")
 public class DemandeServiceImpl implements DemandeService {
 
 	@Autowired

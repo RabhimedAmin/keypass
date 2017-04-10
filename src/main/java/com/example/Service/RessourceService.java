@@ -2,8 +2,9 @@ package com.example.Service;
 
 import java.util.List;
 
-import com.example.model.Ressource;
+import org.springframework.stereotype.Service;
 
+import com.example.model.Ressource;
 public interface RessourceService {
 	public Ressource createRessource(Ressource ressource);
 

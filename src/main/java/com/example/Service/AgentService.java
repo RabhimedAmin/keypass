@@ -2,8 +2,9 @@ package com.example.Service;
 
 import java.util.List;
 
-import com.example.model.Agent;
+import org.springframework.stereotype.Service;
 
+import com.example.model.Agent;
 
 public interface AgentService {
 

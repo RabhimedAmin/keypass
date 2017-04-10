@@ -2,8 +2,9 @@ package com.example.Service;
 
 import java.util.List;
 
-import com.example.model.Server;
+import org.springframework.stereotype.Service;
 
+import com.example.model.Server;
 public interface ServerService {
 
 	public Server createServer(Server server);

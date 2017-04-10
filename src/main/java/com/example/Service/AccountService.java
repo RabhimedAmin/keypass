@@ -2,8 +2,9 @@ package com.example.Service;
 
 import java.util.List;
 
-import com.example.model.Account;
+import org.springframework.stereotype.Service;
 
+import com.example.model.Account;
 public interface AccountService {
 	public Account createAccount(Account account);
 
