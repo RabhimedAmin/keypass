@@ -1,8 +1,8 @@
 package com.example.model;
 
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.Entity;
 import javax.persistence.*;
 
 @Entity
@@ -14,11 +14,16 @@ public class Groupe
 	
 	@OneToMany(orphanRemoval = true)
 	@JoinColumn(name = "groupeId")
-	private List<Account> accountList;
-	
-	@OneToMany(orphanRemoval = true)
-	@JoinColumn(name = "groupeId")
 	private List<Agent> agentList;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "Groupe_account", joinColumns = @JoinColumn(name = "groupe_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"))
+	private Set<Account> accounts;
+	
+	public Set<Account> getAccounts()
+	{
+		return accounts;
+	}
 	
 	/**
 	 * 
@@ -30,42 +35,11 @@ public class Groupe
 	}
 	
 	/**
-	 * @return the accountList
-	 */
-	public List<Account> getAccountList()
-	{
-		return accountList;
-	}
-	
-	/**
 	 * @return the groupeId
 	 */
 	public long getId()
 	{
 		return id;
-	}
-	
-	/**
-	 * @param groupeId
-	 * @param accountList
-	 * @param agentList
-	 */
-	public Groupe(long groupeId, List<Account> accountList,
-			List<Agent> agentList)
-	{
-		super();
-		this.id = id;
-		this.accountList = accountList;
-		this.agentList = agentList;
-	}
-	
-	/**
-	 * @param accountList
-	 *            the accountList to set
-	 */
-	public void setAccountList(List<Account> accountList)
-	{
-		this.accountList = accountList;
 	}
 	
 	/**
@@ -83,5 +57,10 @@ public class Groupe
 	public void setAgentList(List<Agent> agentList)
 	{
 		this.agentList = agentList;
+	}
+	
+	public void setAccounts(Set<Account> accounts)
+	{
+		this.accounts = accounts;
 	}
 }

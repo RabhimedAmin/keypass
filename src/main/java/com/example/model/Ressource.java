@@ -2,6 +2,7 @@ package com.example.model;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -30,25 +31,12 @@ public class Ressource
 	
 	@Column(name = "expiration_date")
 	private LocalDateTime expirationDate;
+	@OneToMany(orphanRemoval = true)
+	@JoinColumn(name = "RessourceId")
+	private List <Account> accountsRessource;
 	
-	/**
-	 * @param idRessource
-	 * @param x
-	 * @param dateDeCreation
-	 * @param dateFin
-	 */
-	// public Ressource(Long id, String x, Date dateDeCreation, Date dateFin)
-	// {
-	// super();
-	// this.id = id;
-	// this.x = x;
-	// this.dateCreation = dateDeCreation;
-	// this.dateFin = dateFin;
-	// }
 	
-	/**
-	 * 
-	 */
+	
 	public Ressource()
 	{
 		super();

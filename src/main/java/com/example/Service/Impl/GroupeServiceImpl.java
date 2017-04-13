@@ -1,6 +1,7 @@
 package com.example.Service.Impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,6 +82,10 @@ public class GroupeServiceImpl implements GroupeService
 		groupeRepository.delete(id);
 	}
 
-	
+	public Set<Account> ajouterAccount(Groupe groupe,Account account)
+	{groupe.getAccounts().add(account);
+	return groupe.getAccounts();
+		
+	}
 	
 }
