@@ -4,21 +4,27 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import com.example.Service.DemandeService;
+import com.example.model.Agent;
 import com.example.model.Demande;
+import com.example.model.Ressource;
+import com.example.repository.AgentRepository;
 import com.example.repository.DemandeRepository;
+import com.example.repository.RessourceRepository;
 
 @Service("demandeService")
 public class DemandeServiceImpl implements DemandeService {
 
 	@Autowired
-	public void setdemandeRepository(DemandeRepository demandeRepository) {
-		this.demandeRepository = demandeRepository;
-	}
+	DemandeRepository demandeRepository;
+	
+	@Autowired
+	private AgentRepository agentRepository;
 
 	@Autowired
-	DemandeRepository demandeRepository;
+	private RessourceRepository ressourceRepository;
 
 	@Override
 	public void deleteDemande(Long id) {
@@ -48,6 +54,24 @@ public class DemandeServiceImpl implements DemandeService {
 	public Demande createdemande(Demande demande) {
 		// TODO Auto-generated method stub
 		return demandeRepository.save(demande);
+	}
+
+	@Override
+	public Demande createNewDemande(Long id_Requester, Long id_Approver,
+			Long id_resource, Demande model)
+	{
+		Agent req = agentRepository.findOne(id_Requester);
+		Agent approver = agentRepository.findOne(id_Approver);
+		Ressource resource = ressourceRepository.findOne(id_resource);
+		
+		Assert.notNull(resource, "Ressource demandée ne peut pas être null");
+		Assert.notNull(req, "Demandeur de partage de ressource ne peut pas être null");
+		
+		model.setRessource(resource);
+		model.setDemandeur(req);
+		model.setApprober(approver);
+		
+		return demandeRepository.save(model);
 	}
 
 }

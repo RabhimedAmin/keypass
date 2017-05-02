@@ -45,14 +45,28 @@ public class GroupeServiceImpl implements GroupeService
 	}
 	
 	@Override
-	public Agent affectAgentTOGroupe(Groupe groupe, Agent agent)
+	public boolean accountAffectee(Groupe groupe, Account account)
 	{
-		if (!agentAffectee(groupe, agent))
-		{
-			groupe.getAgentList().add(agent);
-			return agent;
-		}
-		return null;
+		if (groupe.getAccounts().contains(account)) { return true; }
+		return false;
+	}
+	
+	@Override
+	public boolean affectAgentTOGroupe(Groupe groupe, List<Agent> agents)
+	{
+		boolean affected = false;
+		if (agents != null && !agents.isEmpty())
+			for (Agent agent : agents)
+			{
+				if(agentAffectee(groupe, agent)){
+					continue;
+				}
+				groupe.getAgentList().add(agent);
+				groupeRepository.save(groupe);
+				agentRepository.save(agent);
+				affected = true;
+			}
+		return affected;
 	}
 	
 	public void supprimerAgent(Groupe groupe, Agent agent)
@@ -81,11 +95,12 @@ public class GroupeServiceImpl implements GroupeService
 		// TODO Auto-generated method stub
 		groupeRepository.delete(id);
 	}
-
-	public Set<Account> ajouterAccount(Groupe groupe,Account account)
-	{groupe.getAccounts().add(account);
+	
+	@Override
+	public Set<Account> ajouterAccount(Groupe groupe,Account account){
+	if(!accountAffectee(groupe,account))
+	{groupe.getAccounts().add(account);}
 	return groupe.getAccounts();
 		
 	}
-	
 }

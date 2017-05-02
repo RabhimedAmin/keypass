@@ -35,7 +35,7 @@ public class AgentController {
 	@RequestMapping( method = RequestMethod.POST)
 	public String createAgent(Agent agent) {
 		agentService.createAgent(agent);
-		return "redirect:/product/" + agent.getId();
+		return "redirect:/agent/" + agent.getId();
 	}
 
 	@RequestMapping(value = "/agent/{id}", method = RequestMethod.PUT)
@@ -46,8 +46,9 @@ public class AgentController {
 	}
 
 	@RequestMapping(value="/agent/{id}", method = RequestMethod.DELETE)
-	public String delete(@PathVariable long id) {
+	public String delete(@PathVariable Long id) {
 		agentService.deleteAgent(id);
 		return "redirect:/agents";
 	}
+	
 }

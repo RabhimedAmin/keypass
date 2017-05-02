@@ -4,6 +4,11 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import org.springframework.util.Assert;
+
+import com.example.business.AccountDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Account
 {
@@ -18,11 +23,12 @@ public class Account
 	private String password;
 	
 	@ManyToMany(mappedBy = "accounts")
+	@JsonIgnore
 	private Set<Groupe> groupes;
 	
 	private AccountType type;
 	
-	private enum AccountType
+	public enum AccountType
 	{
 		GUEST, ROOT, USER
 	};
@@ -31,8 +37,8 @@ public class Account
 	{
 		return groupes;
 	}
-	
-	public void setBooks(Set<Groupe> groupes)
+	@JsonIgnore
+	public void setGroupe(Set<Groupe> groupes)
 	{
 		this.groupes = groupes;
 	}
@@ -45,7 +51,7 @@ public class Account
 		super();
 	}
 	
-	public long getId()
+	public Long getId()
 	{
 		return id;
 	}
@@ -70,12 +76,6 @@ public class Account
 		this.password = password;
 	}
 	
-	public void setServer(Server myServer)
-	{
-		// this.server
-		
-	}
-	
 	public AccountType getType()
 	{
 		return type;
@@ -84,5 +84,18 @@ public class Account
 	public void setType(AccountType type)
 	{
 		this.type = type;
+	}
+	
+	private boolean verifPassword(String oldPassword )
+	{
+		Assert.notNull(this.password, "password ne peut pas être null");
+		Assert.notNull(oldPassword, "password ne peut pas être null");
+		return this.getPassword().equals(oldPassword);	
+     }
+	public void updatePassword(AccountDto accountDto)
+	{
+		Assert.notNull(accountDto, "compte ne peut pas être null");
+		Assert.isTrue(verifPassword(accountDto.getOldPassword()), "Erruer lors de la vérification du mot de passe");
+		this.setPassword(accountDto.getNewPassword());
 	}
 }

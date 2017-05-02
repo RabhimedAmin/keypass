@@ -16,4 +16,7 @@ public interface DemandeService
 	Demande modifydemande(Demande demande);
 	
 	Demande createdemande(Demande demande);
+
+	Demande createNewDemande(Long id_Requester, Long id_Approver, Long id_resource,
+			Demande model);
 }

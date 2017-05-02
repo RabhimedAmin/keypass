@@ -54,7 +54,7 @@ public class ServerServiceImpl implements ServerService {
 		Server myServer = getServer(serverId);
 		for (Long long1 : accountsIds) {
 			Account wanted = accountRepository.findOne(long1);
-			wanted.setServer(myServer);
+			//wanted.setServer(myServer);
 			accountRepository.saveAndFlush(wanted);
 		}
 		return true;

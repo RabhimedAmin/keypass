@@ -1,8 +1,7 @@
 package com.example.Service;
 
 import java.util.List;
-
-import org.springframework.stereotype.Service;
+import java.util.Set;
 
 import com.example.model.Account;
 import com.example.model.Agent;
@@ -20,9 +19,13 @@ public interface GroupeService
 	
 	public List<Groupe> getAllGroupes();
 	
-	Agent affectAgentTOGroupe(Groupe groupe, Agent agent);
+	boolean affectAgentTOGroupe(Groupe groupe, List<Agent> agents);
 	
 	boolean agentAffectee(Groupe groupe, Agent agent);
 	
-	public void supprimerAgent(Groupe groupe,Agent agent); 
+	public void supprimerAgent(Groupe groupe,Agent agent);
+
+	boolean accountAffectee(Groupe groupe, Account account);
+
+	Set<Account> ajouterAccount(Groupe groupe, Account account); 
 }

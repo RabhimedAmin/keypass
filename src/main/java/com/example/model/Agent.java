@@ -3,51 +3,50 @@ package com.example.model;
 import javax.persistence.*;
 
 @Entity
-public class Agent {
-
+public class Agent
+{
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	
 	@Column(name = "Name")
-	private String Agentname;
-
+	private String agentName;
+	
 	@Column(name = "Function")
 	private String function;
-
+	
 	/**
 	 * 
 	 */
-	public Agent() {
+	public Agent()
+	{
 		super();
 	}
-
-	public Agent(Long id, String agentname, String function) {
-		super();
-		this.id = id;
-		Agentname = agentname;
-		this.function = function;
-	}
-
-	public long getId() {
+	
+	public Long getId()
+	{
 		return id;
 	}
-
-	public String getAgentname() {
-		return Agentname;
+	
+	public String getAgentName()
+	{
+		return agentName;
 	}
-
-	public void setAgentname(String agentname) {
-		Agentname = agentname;
+	
+	public void setAgentName(String agentname)
+	{
+		agentName = agentname;
 	}
-
-	public String getFunction() {
+	
+	public String getFunction()
+	{
 		return function;
 	}
-
-	public void setFunction(String function) {
+	
+	public void setFunction(String function)
+	{
 		this.function = function;
 	}
-
 	
 }

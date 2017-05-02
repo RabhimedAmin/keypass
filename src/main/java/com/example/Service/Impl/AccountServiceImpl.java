@@ -1,9 +1,9 @@
 package com.example.Service.Impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 import com.example.Service.AccountService;
 import com.example.model.Account;
@@ -50,4 +50,5 @@ public class AccountServiceImpl implements AccountService {
 		// TODO Auto-generated method stub
 		return accountRepository.save(account);
 	}
+
 }

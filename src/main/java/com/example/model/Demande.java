@@ -29,15 +29,17 @@ public class Demande
 	private Ressource ressource;
 	
 	@CreatedDate
-	@Column(name = "creation_date")
+	@Column(name = "creation_date", columnDefinition = "DATETIME")
 	private LocalDateTime creationDate;
 	
 	@LastModifiedDate
-	@Column(name = "modif_date")
+	@Column(name = "modif_date", columnDefinition = "DATETIME")
 	private LocalDateTime modificationDate;
 	
-	@Column(name = "expiry_date")
+	@Column(name = "expiry_date", columnDefinition = "DATETIME")
 	private LocalDateTime expiryDate;
+	
+	private String goals;
 	
 	/**
 	 * @return the demandeur
@@ -55,6 +57,15 @@ public class Demande
 		return approber;
 	}
 	
+	
+	/**
+	 * @param approber the approber to set
+	 */
+	public void setApprober(Agent approber)
+	{
+		this.approber = approber;
+	}
+
 	/**
 	 * @return the creationDate
 	 */
@@ -79,42 +90,27 @@ public class Demande
 		return expiryDate;
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * @param expiryDate the expiryDate to set
 	 */
-	@Override
-	public String toString()
+	public void setExpiryDate(LocalDateTime expiryDate)
 	{
-		return "Demande [id=" + id + ", agent=" + demandeur + ", ressource="
-				+ ressource + ", getId()=" + getId() + ", getAgent()="
-				+ getAgent() + ", getRessource()=" + getRessource()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+		this.expiryDate = expiryDate;
 	}
-	
+
 	/**
 	 * @return the id
 	 */
-	public long getId()
+	public Long getId()
 	{
 		return id;
-	}
-	
-	/**
-	 * @return the agent
-	 */
-	public Agent getAgent()
-	{
-		return demandeur;
 	}
 	
 	/**
 	 * @param agent
 	 *            the agent to set
 	 */
-	public void setAgent(Agent agent)
+	public void setDemandeur(Agent agent)
 	{
 		this.demandeur = agent;
 	}
@@ -136,6 +132,16 @@ public class Demande
 		this.ressource = ressource;
 	}
 	
+	public String getGoals()
+	{
+		return goals;
+	}
+
+	public void setGoals(String goals)
+	{
+		this.goals = goals;
+	}
+
 	/**
 	 * 
 	 */
@@ -145,17 +151,20 @@ public class Demande
 		// TODO Auto-generated constructor stub
 	}
 	
-	/**
-	 * @param id
-	 * @param agent
-	 * @param ressource
-	 */
-	public Demande(long id, Agent agent, Ressource ressource)
-	{
-		super();
-		this.id = id;
-		this.demandeur = agent;
-		this.ressource = ressource;
-	}
 	
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString()
+	{
+		return "Demande [id=" + id + ", agent=" + demandeur + ", ressource="
+				+ ressource + ", getId()=" + getId() + ", getAgent()="
+				+ getDemandeur() + ", getRessource()=" + getRessource()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
 }
