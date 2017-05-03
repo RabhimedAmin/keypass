@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Service.AgentService;
+import com.example.model.Account;
 import com.example.model.Agent;
+import com.example.model.Groupe;
 
 @RestController("/agents")
 @RequestMapping("/agents")
@@ -50,5 +52,12 @@ public class AgentController {
 		agentService.deleteAgent(id);
 		return "redirect:/agents";
 	}
-	
+	@RequestMapping(value = ("/{id}/accounts"), method = RequestMethod.POST)
+	public String affecteAccountToGroupe(
+			@PathVariable("id") Agent agent, @RequestBody Account account)
+	{
+		agentService.ajouterAccount(agent, account);
+		
+		return "redirect:/agent/"+agent.getId()+"/account"+account.getId();
+	}
 }

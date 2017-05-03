@@ -17,12 +17,12 @@ public class Demande
 	private long id;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "id_demandeur", nullable = false, updatable = false)
-	private Agent demandeur;
+	@JoinColumn(name = "id_requester", nullable = false, updatable = false)
+	private Agent requester;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "id_approber", nullable = false, updatable = false)
-	private Agent approber;
+	@JoinColumn(name = "id_approver", nullable = false, updatable = false)
+	private Agent approver;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "id_ressource", nullable = false, updatable = false)
@@ -41,31 +41,37 @@ public class Demande
 	
 	private String goals;
 	
+	public Demande()
+	{
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 	/**
 	 * @return the demandeur
 	 */
-	public Agent getDemandeur()
+	public Agent getRequester()
 	{
-		return demandeur;
+		return requester;
 	}
 	
 	/**
 	 * @return the approber
 	 */
-	public Agent getApprober()
+	public Agent getApprover()
 	{
-		return approber;
+		return approver;
 	}
-	
 	
 	/**
-	 * @param approber the approber to set
+	 * @param approber
+	 *            the approber to set
 	 */
-	public void setApprober(Agent approber)
+	public void setApprover(Agent approver)
 	{
-		this.approber = approber;
+		this.approver = approver;
 	}
-
+	
 	/**
 	 * @return the creationDate
 	 */
@@ -91,13 +97,14 @@ public class Demande
 	}
 	
 	/**
-	 * @param expiryDate the expiryDate to set
+	 * @param expiryDate
+	 *            the expiryDate to set
 	 */
 	public void setExpiryDate(LocalDateTime expiryDate)
 	{
 		this.expiryDate = expiryDate;
 	}
-
+	
 	/**
 	 * @return the id
 	 */
@@ -110,9 +117,9 @@ public class Demande
 	 * @param agent
 	 *            the agent to set
 	 */
-	public void setDemandeur(Agent agent)
+	public void setRequester(Agent agent)
 	{
-		this.demandeur = agent;
+		this.requester = agent;
 	}
 	
 	/**
@@ -136,35 +143,125 @@ public class Demande
 	{
 		return goals;
 	}
-
+	
 	public void setGoals(String goals)
 	{
 		this.goals = goals;
 	}
-
+	
 	/**
-	 * 
+	 * @param creationDate
+	 *            the creationDate to set
 	 */
-	public Demande()
+	public void setCreationDate(LocalDateTime creationDate)
 	{
-		super();
-		// TODO Auto-generated constructor stub
+		this.creationDate = creationDate;
 	}
 	
-	
-	
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
+	 * @param modificationDate
+	 *            the modificationDate to set
+	 */
+	public void setModificationDate(LocalDateTime modificationDate)
+	{
+		this.modificationDate = modificationDate;
+	}
+
+	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString()
 	{
-		return "Demande [id=" + id + ", agent=" + demandeur + ", ressource="
-				+ ressource + ", getId()=" + getId() + ", getAgent()="
-				+ getDemandeur() + ", getRessource()=" + getRessource()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+		return "Demande [id=" + id + ", requester=" + requester + ", approver="
+				+ approver + ", ressource=" + ressource + ", creationDate="
+				+ creationDate + ", modificationDate=" + modificationDate
+				+ ", expiryDate=" + expiryDate + ", goals=" + goals + "]";
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((approver == null) ? 0 : approver.hashCode());
+		result = prime * result
+				+ ((creationDate == null) ? 0 : creationDate.hashCode());
+		result = prime * result
+				+ ((expiryDate == null) ? 0 : expiryDate.hashCode());
+		result = prime * result + ((goals == null) ? 0 : goals.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((modificationDate == null) ? 0
+				: modificationDate.hashCode());
+		result = prime * result
+				+ ((requester == null) ? 0 : requester.hashCode());
+		result = prime * result
+				+ ((ressource == null) ? 0 : ressource.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Demande other = (Demande) obj;
+		if (approver == null)
+		{
+			if (other.approver != null)
+				return false;
+		} else if (!approver.equals(other.approver))
+			return false;
+		if (creationDate == null)
+		{
+			if (other.creationDate != null)
+				return false;
+		} else if (!creationDate.equals(other.creationDate))
+			return false;
+		if (expiryDate == null)
+		{
+			if (other.expiryDate != null)
+				return false;
+		} else if (!expiryDate.equals(other.expiryDate))
+			return false;
+		if (goals == null)
+		{
+			if (other.goals != null)
+				return false;
+		} else if (!goals.equals(other.goals))
+			return false;
+		if (id != other.id)
+			return false;
+		if (modificationDate == null)
+		{
+			if (other.modificationDate != null)
+				return false;
+		} else if (!modificationDate.equals(other.modificationDate))
+			return false;
+		if (requester == null)
+		{
+			if (other.requester != null)
+				return false;
+		} else if (!requester.equals(other.requester))
+			return false;
+		if (ressource == null)
+		{
+			if (other.ressource != null)
+				return false;
+		} else if (!ressource.equals(other.ressource))
+			return false;
+		return true;
+	}
+	
 }

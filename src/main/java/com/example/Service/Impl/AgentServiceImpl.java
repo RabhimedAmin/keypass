@@ -1,14 +1,15 @@
 package com.example.Service.Impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Service.AgentService;
-
+import com.example.model.Account;
 import com.example.model.Agent;
-
+import com.example.model.Groupe;
 import com.example.repository.AgentRepository;
 
 @Service("agentService")
@@ -51,5 +52,16 @@ public class AgentServiceImpl implements AgentService {
 		// TODO Auto-generated method stub
 		return agentRepository.save(agent);
 	}
-
+	@Override
+	public boolean accountAffectee(Agent agent, Account account)
+	{
+		if (agent.getAccess().contains(account)) { return true; }
+		return false;
+	}
+	@Override
+	public Set<Account> ajouterAccount(Agent agent,Account account){
+	if(!accountAffectee(agent,account))
+	{agent.getAccess().add(account);}
+	return agent.getAccess();
+    }
 }

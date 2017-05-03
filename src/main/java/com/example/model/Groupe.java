@@ -73,11 +73,7 @@ public class Groupe
 	}
 	
 	
-	public void setAccounts(Set<Account> accounts)
-	{
-		this.accounts = accounts;
-	}
-
+	
 	/**
 	 * @return the libelle
 	 */

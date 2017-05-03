@@ -118,7 +118,7 @@ public class RessourceController
 	{
 		model.setLogin(account.getLogin());
 		
-		model.setType(account.getType());
+		model.setDescription(account.getDescription());
 		model.setPassword(account.getNewPassword());
 		accountService.modifyAccount(model);
 		return "redirect:/account/" + model.getId();

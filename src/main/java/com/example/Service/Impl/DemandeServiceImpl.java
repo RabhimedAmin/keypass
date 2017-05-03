@@ -68,8 +68,8 @@ public class DemandeServiceImpl implements DemandeService {
 		Assert.notNull(req, "Demandeur de partage de ressource ne peut pas être null");
 		
 		model.setRessource(resource);
-		model.setDemandeur(req);
-		model.setApprober(approver);
+		model.setRequester(req);
+		model.setApprover(approver);
 		
 		return demandeRepository.save(model);
 	}
