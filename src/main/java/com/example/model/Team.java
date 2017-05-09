@@ -1,31 +1,36 @@
 package com.example.model;
 
-import java.util.List;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Groupe
+public class Team
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToMany(orphanRemoval = true)
-	@JoinColumn(name = "groupeId")
-	@JsonIgnore
-	private List<Agent> agentList;
+//	@OneToMany(orphanRemoval = true)
+//	@JoinColumn(name = "teamId")
+//	private List<Member> memberList;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "Groupe_account", 
-		joinColumns = @JoinColumn(name = "groupe_id", referencedColumnName = "id"), 
-		inverseJoinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id")
+	@JoinTable(name = "Team_AccessAccount", 
+		joinColumns = @JoinColumn(name = "team_id", referencedColumnName = "id"), 
+		inverseJoinColumns = @JoinColumn(name = "access_account_id", referencedColumnName = "id")
 	)
 	@JsonIgnore
-	private Set<Account> accounts;
+	private Set<AccessAccount> accessAccounts;
 	
 	private String libelle;
 	
@@ -34,7 +39,7 @@ public class Groupe
 	/**
 	 * 
 	 */
-	public Groupe()
+	public Team()
 	{
 		super();
 	}
@@ -50,27 +55,29 @@ public class Groupe
 	/**
 	 * @return the agentList
 	 */
+//	@JsonIgnore
+//	public List<Member> getMemberList()
+//	{
+//		return memberList;
+//	}
+	
 	@JsonIgnore
-	public List<Agent> getAgentList()
+	public Set<AccessAccount> getAccounts()
 	{
-		return agentList;
-	}
-	
-	
-	public Set<Account> getAccounts()
-	{
-		return accounts;
+		return accessAccounts;
 	}
 	
 	/**
 	 * @param agentList
 	 *            the agentList to set
 	 */
-	@JsonIgnore
-	public void setAgentList(List<Agent> agentList)
-	{
-		this.agentList = agentList;
-	}
+//	@JsonIgnore
+//	public void setMemberList(List<Member> memberList)
+//	{
+//		this.memberList = memberList;
+////		this.memberList.clear();
+////		this.memberList.addAll(memberList);
+//	}
 	
 	
 	
@@ -115,9 +122,9 @@ public class Groupe
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((accounts == null) ? 0 : accounts.hashCode());
-		result = prime * result
-				+ ((agentList == null) ? 0 : agentList.hashCode());
+				+ ((accessAccounts == null) ? 0 : accessAccounts.hashCode());
+//		result = prime * result
+//				+ ((memberList == null) ? 0 : memberList.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -137,19 +144,19 @@ public class Groupe
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Groupe other = (Groupe) obj;
-		if (accounts == null)
+		Team other = (Team) obj;
+		if (accessAccounts == null)
 		{
-			if (other.accounts != null)
+			if (other.accessAccounts != null)
 				return false;
-		} else if (!accounts.equals(other.accounts))
+		} else if (!accessAccounts.equals(other.accessAccounts))
 			return false;
-		if (agentList == null)
-		{
-			if (other.agentList != null)
-				return false;
-		} else if (!agentList.equals(other.agentList))
-			return false;
+//		if (memberList == null)
+//		{
+//			if (other.memberList != null)
+//				return false;
+//		} else if (!memberList.equals(other.memberList))
+//			return false;
 		if (description == null)
 		{
 			if (other.description != null)
@@ -177,8 +184,8 @@ public class Groupe
 	@Override
 	public String toString()
 	{
-		return "Groupe [id=" + id + ", agentList=" + agentList + ", accounts="
-				+ accounts + ", libelle=" + libelle + ", description="
+		return "Groupe [id=" + id + ", accounts="
+				+ accessAccounts + ", libelle=" + libelle + ", description="
 				+ description + "]";
 	}
 }

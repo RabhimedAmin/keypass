@@ -10,7 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @EntityListeners(value = { AuditingEntityListener.class })
-public class Demande
+public class Request
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,15 +18,13 @@ public class Demande
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "id_requester", nullable = false, updatable = false)
-	private Agent requester;
+	private Member requester;
 	
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "id_approver", nullable = false, updatable = false)
-	private Agent approver;
+	private boolean statu;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "id_ressource", nullable = false, updatable = false)
-	private Ressource ressource;
+	private Resource resource;
 	
 	@CreatedDate
 	@Column(name = "creation_date", columnDefinition = "DATETIME")
@@ -41,35 +39,26 @@ public class Demande
 	
 	private String goals;
 	
-	public Demande()
+	public Request()
 	{
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
 	/**
+	 * @return the id
+	 */
+	public Long getId()
+	{
+		return id;
+	}
+	
+	/**
 	 * @return the demandeur
 	 */
-	public Agent getRequester()
+	public Member getRequester()
 	{
 		return requester;
-	}
-	
-	/**
-	 * @return the approber
-	 */
-	public Agent getApprover()
-	{
-		return approver;
-	}
-	
-	/**
-	 * @param approber
-	 *            the approber to set
-	 */
-	public void setApprover(Agent approver)
-	{
-		this.approver = approver;
 	}
 	
 	/**
@@ -106,37 +95,29 @@ public class Demande
 	}
 	
 	/**
-	 * @return the id
-	 */
-	public Long getId()
-	{
-		return id;
-	}
-	
-	/**
-	 * @param agent
+	 * @param member
 	 *            the agent to set
 	 */
-	public void setRequester(Agent agent)
+	public void setRequester(Member member)
 	{
-		this.requester = agent;
+		this.requester = member;
 	}
 	
 	/**
 	 * @return the ressource
 	 */
-	public Ressource getRessource()
+	public Resource getRessource()
 	{
-		return ressource;
+		return resource;
 	}
 	
 	/**
-	 * @param ressource
+	 * @param resource
 	 *            the ressource to set
 	 */
-	public void setRessource(Ressource ressource)
+	public void setRessource(Resource resource)
 	{
-		this.ressource = ressource;
+		this.resource = resource;
 	}
 	
 	public String getGoals()
@@ -166,6 +147,23 @@ public class Demande
 	{
 		this.modificationDate = modificationDate;
 	}
+	
+	/**
+	 * @return the statu
+	 */
+	public boolean isStatu()
+	{
+		return statu;
+	}
+	
+	/**
+	 * @param statu
+	 *            the statu to set
+	 */
+	public void setStatu(boolean statu)
+	{
+		this.statu = statu;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -173,8 +171,8 @@ public class Demande
 	@Override
 	public String toString()
 	{
-		return "Demande [id=" + id + ", requester=" + requester + ", approver="
-				+ approver + ", ressource=" + ressource + ", creationDate="
+		return "Request [id=" + id + ", requester=" + requester + ", statu="
+				+ statu + ", resource=" + resource + ", creationDate="
 				+ creationDate + ", modificationDate=" + modificationDate
 				+ ", expiryDate=" + expiryDate + ", goals=" + goals + "]";
 	}
@@ -188,8 +186,6 @@ public class Demande
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((approver == null) ? 0 : approver.hashCode());
-		result = prime * result
 				+ ((creationDate == null) ? 0 : creationDate.hashCode());
 		result = prime * result
 				+ ((expiryDate == null) ? 0 : expiryDate.hashCode());
@@ -200,7 +196,8 @@ public class Demande
 		result = prime * result
 				+ ((requester == null) ? 0 : requester.hashCode());
 		result = prime * result
-				+ ((ressource == null) ? 0 : ressource.hashCode());
+				+ ((resource == null) ? 0 : resource.hashCode());
+		result = prime * result + (statu ? 1231 : 1237);
 		return result;
 	}
 
@@ -216,13 +213,7 @@ public class Demande
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Demande other = (Demande) obj;
-		if (approver == null)
-		{
-			if (other.approver != null)
-				return false;
-		} else if (!approver.equals(other.approver))
-			return false;
+		Request other = (Request) obj;
 		if (creationDate == null)
 		{
 			if (other.creationDate != null)
@@ -255,13 +246,14 @@ public class Demande
 				return false;
 		} else if (!requester.equals(other.requester))
 			return false;
-		if (ressource == null)
+		if (resource == null)
 		{
-			if (other.ressource != null)
+			if (other.resource != null)
 				return false;
-		} else if (!ressource.equals(other.ressource))
+		} else if (!resource.equals(other.resource))
+			return false;
+		if (statu != other.statu)
 			return false;
 		return true;
 	}
-	
 }

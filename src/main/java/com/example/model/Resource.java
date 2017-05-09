@@ -2,7 +2,9 @@ package com.example.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -10,20 +12,41 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Ressource
+public class Resource
 {
+	public enum ResourceType {
+		SERVEURAPPLICATIF, SERVEURWEB, SERVEURBD, SERVEURSMTP,PLATFORM
+	};
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(name="name")
+	private String host;
+
+	@Column(name="port")
+	private int port;
+	
+	@Column(name="protocol")
+	private String protocol;
+	
+	private ResourceType type;
+
 	@Column(name = "description")
 	private String description;
 	
@@ -40,9 +63,17 @@ public class Ressource
 	
 	@OneToMany(orphanRemoval = true)
 	@JoinColumn(name = "RessourceId")
-	private List<Account> accountsRessource;
+	private List<AccessAccount> accountsRessource;
 	
-	public Ressource()
+	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "resource_managares", 
+		joinColumns = @JoinColumn(name = "ressource_id", referencedColumnName = "id"), 
+		inverseJoinColumns = @JoinColumn(name = "managers_id", referencedColumnName = "id")
+	)
+	private Set<Member> managers ;
+	
+	public Resource()
 	{
 		super();
 	}
@@ -110,7 +141,7 @@ public class Ressource
 	/**
 	 * @return the accountsRessource
 	 */
-	public List<Account> getAccountsRessource()
+	public List<AccessAccount> getAccountsRessource()
 	{
 		return accountsRessource;
 	}
@@ -119,11 +150,21 @@ public class Ressource
 	 * @param accountsRessource
 	 *            the accountsRessource to set
 	 */
-	public void setAccountsRessource(List<Account> accountsRessource)
+	public void setAccountsRessource(List<AccessAccount> accountsRessource)
 	{
 		this.accountsRessource = accountsRessource;
 	}
 	
+	public ResourceType getType()
+	{
+		return type;
+	}
+
+	public void setType(ResourceType type)
+	{
+		this.type = type;
+	}
+
 	/**
 	 * @return the description
 	 */
@@ -139,19 +180,83 @@ public class Ressource
 	{
 		this.description = description;
 	}
-	
-	/*
-	 * (non-Javadoc)
-	 * 
+
+	/**
+	 * @param host the host to set
+	 */
+	public void setHost(String host)
+	{
+		this.host = host;
+	}
+
+	/**
+	 * @param port the port to set
+	 */
+	public void setPort(int port)
+	{
+		this.port = port;
+	}
+
+	/**
+	 * @param protocol the protocol to set
+	 */
+	public void setProtocol(String protocol)
+	{
+		this.protocol = protocol;
+	}
+
+	/**
+	 * @return the managers
+	 */
+	public Set<Member> getManagers()
+	{
+		return managers;
+	}
+
+//	/**
+//	 * @param managers the managers to set
+//	 */
+//	public void setManagers(Set<Member> managers)
+//	{
+//		this.managers = managers;
+//	}
+
+	/**
+	 * @return the host
+	 */
+	public String getHost()
+	{
+		return host;
+	}
+
+	/**
+	 * @return the port
+	 */
+	public int getPort()
+	{
+		return port;
+	}
+
+	/**
+	 * @return the protocol
+	 */
+	public String getProtocol()
+	{
+		return protocol;
+	}
+
+	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString()
 	{
-		return "Ressource [id=" + id + ", description=" + description + ", creationDate="
-				+ creationDate + ", modificationDate=" + modificationDate
-				+ ", expirationDate=" + expirationDate + ", accountsRessource="
-				+ accountsRessource + "]";
+		return "Ressource [id=" + id + ", host=" + host + ", port=" + port
+				+ ", protocol=" + protocol + ", type=" + type + ", description="
+				+ description + ", creationDate=" + creationDate
+				+ ", modificationDate=" + modificationDate + ", expirationDate="
+				+ expirationDate + ", accountsRessource=" + accountsRessource
+				+ "]";
 	}
 
 	/* (non-Javadoc)
@@ -162,15 +267,22 @@ public class Ressource
 	{
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((accountsRessource == null) ? 0
+				: accountsRessource.hashCode());
 		result = prime * result
 				+ ((creationDate == null) ? 0 : creationDate.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result
 				+ ((expirationDate == null) ? 0 : expirationDate.hashCode());
+		result = prime * result + ((host == null) ? 0 : host.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((modificationDate == null) ? 0
 				: modificationDate.hashCode());
+		result = prime * result + port;
+		result = prime * result
+				+ ((protocol == null) ? 0 : protocol.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -186,7 +298,13 @@ public class Ressource
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Ressource other = (Ressource) obj;
+		Resource other = (Resource) obj;
+		if (accountsRessource == null)
+		{
+			if (other.accountsRessource != null)
+				return false;
+		} else if (!accountsRessource.equals(other.accountsRessource))
+			return false;
 		if (creationDate == null)
 		{
 			if (other.creationDate != null)
@@ -205,6 +323,12 @@ public class Ressource
 				return false;
 		} else if (!expirationDate.equals(other.expirationDate))
 			return false;
+		if (host == null)
+		{
+			if (other.host != null)
+				return false;
+		} else if (!host.equals(other.host))
+			return false;
 		if (id == null)
 		{
 			if (other.id != null)
@@ -217,7 +341,19 @@ public class Ressource
 				return false;
 		} else if (!modificationDate.equals(other.modificationDate))
 			return false;
+		if (port != other.port)
+			return false;
+		if (protocol == null)
+		{
+			if (other.protocol != null)
+				return false;
+		} else if (!protocol.equals(other.protocol))
+			return false;
+		if (type != other.type)
+			return false;
 		return true;
 	}
+
+	
 	
 }

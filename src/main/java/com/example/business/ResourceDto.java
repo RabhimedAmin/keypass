@@ -6,7 +6,7 @@ package com.example.business;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import com.example.model.Ressource;
+import com.example.model.Resource;
 
 import lombok.Data;
 
@@ -31,9 +31,9 @@ public class ResourceDto implements Serializable
 		super();
 	}
 
-	public Ressource toModel()
+	public Resource toModel()
 	{
-		Ressource model = new Ressource();
+		Resource model = new Resource();
 		model.setDescription(this.description);
 		model.setExpirationDate(this.expirationDate);
 		return model;

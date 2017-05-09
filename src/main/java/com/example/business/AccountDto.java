@@ -5,7 +5,7 @@ package com.example.business;
 
 import java.io.Serializable;
 
-import com.example.model.Account;
+import com.example.model.AccessAccount;
 
 
 import lombok.Data;
@@ -27,8 +27,8 @@ public class AccountDto implements Serializable
 	
 	private String description;
 	
-	public Account toModel(){
-		Account model = new Account();
+	public AccessAccount toModel(){
+		AccessAccount model = new AccessAccount();
 		model.setLogin(login);
 		model.setPassword(newPassword);
 		model.setDescription(description);

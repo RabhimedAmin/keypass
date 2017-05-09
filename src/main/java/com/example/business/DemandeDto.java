@@ -6,8 +6,7 @@ package com.example.business;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import com.example.model.Demande;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.example.model.Request;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 
@@ -39,9 +38,9 @@ public class DemandeDto implements Serializable
 	private String goals;
 
 
-	public Demande toModel()
+	public Request toModel()
 	{
-		Demande model = new Demande();
+		Request model = new Request();
 		model.setGoals(this.goals);
 		model.setExpiryDate(this.expiryDate);
 		return model;

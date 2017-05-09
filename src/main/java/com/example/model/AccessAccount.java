@@ -10,7 +10,8 @@ import com.example.business.AccountDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Account
+@Table(name = "access_account")
+public class AccessAccount
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,17 +23,14 @@ public class Account
 	@Column(name = "password")
 	private String password;
 	
-	@ManyToMany(mappedBy = "accounts")
+	@ManyToMany(mappedBy = "accessAccounts")
 	@JsonIgnore
-	private Set<Groupe> groupes;
+	private Set<Team> teams;
 	
-	@ManyToMany(mappedBy = "access")
-	@JsonIgnore
-	private Set<Agent> agents;
 	
 	private String description;
 	
-	public Account()
+	public AccessAccount()
 	{
 		super();
 	}
@@ -62,23 +60,15 @@ public class Account
 		this.password = password;
 	}
 	
-	/**
-	 * @return the agents
-	 */
-	public Set<Agent> getAgents()
-	{
-		return agents;
-	}
 	
-
 	/**
-	 * @param agents the agents to set
+	 * @param members the agents to set
 	 */
 	
 	
-	public Set<Groupe> getGroupes()
+	public Set<Team> getTeams()
 	{
-		return groupes;
+		return teams;
 	}
 	
 	
@@ -126,7 +116,7 @@ public class Account
 	public String toString()
 	{
 		return "Account [id=" + id + ", login=" + login + ", password="
-				+ password + ", groupes=" + groupes + ", agents=" + agents
+				+ password + ", equipeDeTravails=" + teams
 				+ ", description=" + description + "]";
 	}
 
@@ -138,10 +128,10 @@ public class Account
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((agents == null) ? 0 : agents.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((groupes == null) ? 0 : groupes.hashCode());
+		result = prime * result + ((teams == null) ? 0
+				: teams.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result
@@ -161,24 +151,18 @@ public class Account
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Account other = (Account) obj;
-		if (agents == null)
-		{
-			if (other.agents != null)
-				return false;
-		} else if (!agents.equals(other.agents))
-			return false;
+		AccessAccount other = (AccessAccount) obj;
 		if (description == null)
 		{
 			if (other.description != null)
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (groupes == null)
+		if (teams == null)
 		{
-			if (other.groupes != null)
+			if (other.teams != null)
 				return false;
-		} else if (!groupes.equals(other.groupes))
+		} else if (!teams.equals(other.teams))
 			return false;
 		if (id == null)
 		{
@@ -201,5 +185,6 @@ public class Account
 		return true;
 	}
 
+	
 	
 }
