@@ -20,21 +20,15 @@ public interface TeamService
 	public List<Team> getAllGroupes();
 	
 	//boolean affectAgentTOGroupe(Groupe groupe, List<Agent> agents);
-	
-
-	
 
 
 	boolean accountAffectee(Team team, AccessAccount accessAccount);
 
 	Set<AccessAccount> ajouterAccount(Team team, AccessAccount accessAccount);
 
-
-
-	
 	//void supprimerAgent(Groupe groupe, String name);
 
-	void supprimerAgent(Team team, Member member);
+	void supprimerAgent(Member member);
 
 	
 

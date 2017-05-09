@@ -15,7 +15,6 @@ import com.example.repository.MemberRepository;
 import com.example.repository.ProfileAuthoritiesRepository;
 import com.example.repository.ResourceRepository;
 
-
 @Service("agentService")
 public class MemberServiceImpl implements MemberService
 {
@@ -25,7 +24,7 @@ public class MemberServiceImpl implements MemberService
 	
 	@Autowired
 	ResourceRepository resourceRepository;
-
+	
 	@Autowired
 	private ProfileAuthoritiesRepository profileAuthoritiesRepository;
 	
@@ -57,14 +56,7 @@ public class MemberServiceImpl implements MemberService
 		// TODO Auto-generated method stub
 		return memberRepository.save(member);
 	}
-	
-	@Override
-	public Member createAgent(Member member)
-	{
-		// TODO Auto-generated method stub
-		return memberRepository.save(member);
-		
-	}
+
 	
 	@Override
 	public Member getAgentByName(String name, String password)
@@ -77,18 +69,13 @@ public class MemberServiceImpl implements MemberService
 		}
 		return null;
 	}
-	
-	public boolean isManager(Resource resource, Member member)
-	{
-		String MANAGER = "MANAGER";
-		return (member.getProfile().getGrantedAuthority().equals(MANAGER));
-	}
+
 	
 	@Override
 	public Member addResourceManager(Member member, Resource resource)
 	{
 		
-		if (isManager(resource, member)
+		if (member.isManager()
 				&& !(resource.getManagers().contains(member)))
 		{
 			resource.getManagers().add(member);
@@ -101,25 +88,24 @@ public class MemberServiceImpl implements MemberService
 	@Override
 	public void deleteResourceManager(Member member, Resource resource)
 	{
-		if (isManager(resource, member)
-				&& resource.getManagers().contains(member))
+		if (resource.getManagers().contains(member))
 		{
 			resource.getManagers().remove(member);
 			resourceRepository.save(resource);
 			memberRepository.save(member);
-			
 		}
 		
 	}
-
+	
 	@Override
 	@Transactional
 	public Member createNewMember(Member model, Long profileAutoritiesId)
 	{
-		ProfileAuthorities pa = profileAuthoritiesRepository.findOne(profileAutoritiesId);
-		Assert.notNull(pa,"profile cannot be null");
+		ProfileAuthorities pa = profileAuthoritiesRepository
+				.findOne(profileAutoritiesId);
+		Assert.notNull(pa, "profile cannot be null");
 		model.setProfile(pa);
 		return memberRepository.save(model);
 	}
-	
+
 }

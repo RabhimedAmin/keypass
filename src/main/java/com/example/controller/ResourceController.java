@@ -1,5 +1,8 @@
 package com.example.controller;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Service.AccessAccountService;
+import com.example.Service.MemberService;
 import com.example.Service.ResourceService;
 import com.example.business.AccountDto;
 import com.example.business.ResourceDto;
 import com.example.model.AccessAccount;
+import com.example.model.Member;
 import com.example.model.Resource;
 
 @RestController("/ressources")
@@ -28,6 +33,9 @@ public class ResourceController
 	
 	@Autowired
 	private AccessAccountService accessAccountService;
+
+	@Autowired
+	private MemberService memberService;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Resource> getRessourceById(
@@ -132,4 +140,13 @@ public class ResourceController
 		return "redirect:/accounts";
 	}
 	
+	@RequestMapping(value = "{idResource}/manager/{idManager}", method = POST, produces=APPLICATION_JSON_VALUE)
+	public String GrantManagerAuthority(@PathVariable("idResource") Resource ressource,
+			@PathVariable("idManager") Member member)
+	{
+		Assert.notNull(member, "Manager not found");
+		Assert.notNull(ressource, "Resource not found");
+		memberService.addResourceManager(member, ressource);
+		return "redirect:/agent/" + ressource.getId();
+	}
 }

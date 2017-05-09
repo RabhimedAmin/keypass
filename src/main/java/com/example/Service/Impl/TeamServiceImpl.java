@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.Service.TeamService;
 import com.example.model.AccessAccount;
@@ -39,7 +40,7 @@ public class TeamServiceImpl implements TeamService
 	@Override
 	public boolean memberAffected(Team team, Member member)
 	{
-		return member.getTeam().equals(team);
+		return member.getTeam() != null && member.getTeam().equals(team);
 	}
 	
 	@Override
@@ -83,10 +84,12 @@ public class TeamServiceImpl implements TeamService
 	// }
 	//
 	@Override
-	public void supprimerAgent(Team team, Member member)
+	@Transactional
+	public void supprimerAgent(Member member)
 	{
+		memberRepository.saveAndFlush(member);
 		member.setTeam(null);
-		memberRepository.save(member);
+		memberRepository.saveAndFlush(member);
 	}
 	//
 	//// @Override

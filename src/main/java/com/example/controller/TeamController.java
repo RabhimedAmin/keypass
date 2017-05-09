@@ -1,10 +1,14 @@
 package com.example.controller;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,27 +73,27 @@ public class TeamController
 	// return "redirect:/groupes";
 	// }
 	
-	@RequestMapping(value = ("/{id}/accounts"), method = RequestMethod.POST)
+	@RequestMapping(value = ("team /{id_team}/account/{id_account}"), method = RequestMethod.POST)
 	public ResponseEntity<?> affecteAccountToGroupe(
-			@PathVariable("id") Team team, @RequestBody AccessAccount accessAccount)
+			@PathVariable("id_team") Team team, @PathVariable ("id_account") AccessAccount accessAccount)
 	{
 		teamService.ajouterAccount(team, accessAccount);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/{id}/deleteAgent", method = RequestMethod.DELETE)
-	public String deleteAgentFromGroupe(@PathVariable("id") Team team,
-			@RequestBody Member member)
+	@RequestMapping(value = "/member/{id_member}", method = RequestMethod.DELETE)
+	public String deleteAgentFromGroupe(@PathVariable ("id_member")Member member)
 	{
-		teamService.supprimerAgent(team, member);
+		teamService.supprimerAgent(member);
 		return "redirect:/groupes";
 	}
 	
-	@RequestMapping(value = ("/{id}/ajoutAgent"), method = RequestMethod.POST)
-	public String ajoutAgentToGroupe(@PathVariable("id") Team team,
-			@RequestBody Member member)
+	@RequestMapping(value = "team/{id_team}/member/{id_member}", method = POST, produces=APPLICATION_JSON_VALUE)
+	public String ajoutAgentToGroupe(@PathVariable("id_team") Team team, @PathVariable("id_member") Member member)
 	{
+		Assert.notNull(member, "member not found");
+		Assert.notNull(team, "team not found");
 		teamService.memberToTeam(team, member);
 		
 		return "redirect:/groupes";

@@ -121,8 +121,8 @@ public class Team
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((accessAccounts == null) ? 0 : accessAccounts.hashCode());
+//		result = prime * result
+//				+ ((accessAccounts == null) ? 0 : accessAccounts.hashCode());
 //		result = prime * result
 //				+ ((memberList == null) ? 0 : memberList.hashCode());
 		result = prime * result

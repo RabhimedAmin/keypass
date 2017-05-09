@@ -12,6 +12,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import org.springframework.util.Assert;
+
+import com.example.model.utils.Authority;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -41,8 +44,9 @@ public class Member
 	@JoinColumn(name = "profile_id", nullable = false, updatable = false)
 	private ProfileAuthorities profile;
 	
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "team_id", nullable = false, updatable = false)
+	@ManyToOne
+	@JoinColumn(name = "team_id")
+	@JsonIgnore
 	private Team team;
 	
 	@ManyToMany(mappedBy = "managers")
@@ -176,6 +180,7 @@ public class Member
 	 * @param team
 	 *            the team to set
 	 */
+	@JsonIgnore
 	public void setTeam(Team team)
 	{
 		this.team = team;
@@ -281,5 +286,10 @@ public class Member
 			return false;
 		return true;
 	}
-	
+
+	public boolean isManager()
+	{
+		Assert.notNull(profile, "Member without profile");
+		return profile.getGrantedAuthority().equals(Authority.MANAGER);
+	}
 }

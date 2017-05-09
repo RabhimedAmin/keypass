@@ -97,13 +97,16 @@ public class MemberController
 		return "redirect:/agent/" + r.getId();
 	}
 	
-	@RequestMapping(value="/prfile/{id}",method = RequestMethod.POST)
-	public String addProfile(@RequestBody ProfileAuthorities profile){
+	@RequestMapping(value = "/prfile/{id}", method = RequestMethod.POST)
+	public String addProfile(@RequestBody ProfileAuthorities profile)
+	{
 		profileAuthoritiesService.createProfile(profile);
-		return "redirect:/profile/"+profile.getId();
+		return "redirect:/profile/" + profile.getId();
 	}
-	@RequestMapping(value="/profile/{id}",method = RequestMethod.DELETE)
-		public String deleteProfile(@PathVariable Long id ){
+	
+	@RequestMapping(value = "/profile/{id}", method = RequestMethod.DELETE)
+	public String deleteProfile(@PathVariable Long id)
+	{
 		profileAuthoritiesService.removePorfile(id);
 		return "redirect:/agents";
 	}
