@@ -17,8 +17,8 @@ import com.example.Service.RequestService;
 import com.example.business.DemandeDto;
 import com.example.model.Request;
 
-@RestController("/Demandes")
-@RequestMapping("/Demandes")
+@RestController("/Requests")
+@RequestMapping("/Requests")
 public class RequestController {
 	@Autowired
 	private RequestService requestService;
@@ -30,31 +30,30 @@ public class RequestController {
 
 	}
 
-	@RequestMapping( method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Request>> getAlldemandes() {
 		List<Request> searcheddemande = requestService.getAllDemandes();
 		return new ResponseEntity<>(searcheddemande, HttpStatus.OK);
 	}
 
-	@RequestMapping( method = RequestMethod.POST, consumes=APPLICATION_JSON_VALUE)
-	public String creatdemande(@ RequestBody DemandeDto demande) {
-		
-		
-		Request model = requestService.createNewDemande(demande.getId_Requester(), 
-			demande.getId_resource(), demande.toModel());
-		return "redirect:/Demandes/" + model.getId();
+	@RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
+	public String creatdemande(@RequestBody DemandeDto demande) {
+
+		Request model = requestService.createNewDemande(demande.getId_Requester(), demande.getId_resource(),
+				demande.toModel());
+		return "redirect:/Requests/Request/" + model.getId();
 	}
 
 	@RequestMapping(value = "/demande/{id}", method = RequestMethod.PUT)
 	public String update(@RequestBody Request request) {
 		requestService.modifydemande(request);
-		return "redirect:/Demandes/" + request.getId();
+		return "redirect:/Requests/Request/" + request.getId();
 
 	}
 
 	@RequestMapping(value = "/demande/{id}", method = RequestMethod.DELETE)
 	public String delete(@PathVariable Long id) {
 		requestService.deleteDemande(id);
-		return "redirect:/Demandes";
+		return "redirect:/Request";
 	}
 }

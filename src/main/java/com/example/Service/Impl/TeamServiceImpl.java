@@ -15,56 +15,51 @@ import com.example.repository.MemberRepository;
 import com.example.repository.TeamRepository;
 
 @Service("groupeService")
-public class TeamServiceImpl implements TeamService
-{
+public class TeamServiceImpl implements TeamService {
 	@Autowired
 	private TeamRepository teamRepository;
-	
+
 	@Autowired
 	private MemberRepository memberRepository;
-	
+
 	@Override
-	public Team createGroupe(Team team)
-	{
+	public Team createGroupe(Team team) {
 		// TODO Auto-generated method stub
 		return teamRepository.save(team);
 	}
-	
+
 	@Override
-	public Team modifyGroupe(Team team)
-	{
+	public Team modifyGroupe(Team team) {
 		// TODO Auto-generated method stub
 		return teamRepository.save(team);
 	}
-	
+
 	@Override
-	public boolean memberAffected(Team team, Member member)
-	{
+	public boolean memberAffected(Team team, Member member) {
 		return member.getTeam() != null && member.getTeam().equals(team);
 	}
-	
+
 	@Override
-	public boolean memberToTeam(Team team, Member member)
-	{
+	public boolean memberToTeam(Team team, Member member) {
 		boolean affect = false;
-		if (!memberAffected(team, member))
-		{
+		if (!memberAffected(team, member)) {
 			member.setTeam(team);
-			
+
 			memberRepository.save(member);
 			affect = true;
 		}
 		return affect;
 	}
-	
+
 	@Override
-	public boolean accountAffectee(Team team, AccessAccount accessAccount)
-	{
-		if (team.getAccounts().contains(accessAccount)) { return true; }
-		
+	public boolean accountAffectee(Team team, AccessAccount accessAccount) {
+		if (team.getAccounts().contains(accessAccount)) {
+			return true;
+		}
+
 		return false;
 	}
-	
+
 	// @Override
 	// public boolean affectAgentTOGroupe(Groupe groupe, List<Agent> agents)
 	// {
@@ -85,8 +80,7 @@ public class TeamServiceImpl implements TeamService
 	//
 	@Override
 	@Transactional
-	public void supprimerAgent(Member member)
-	{
+	public void supprimerAgent(Member member) {
 		memberRepository.saveAndFlush(member);
 		member.setTeam(null);
 		memberRepository.saveAndFlush(member);
@@ -102,38 +96,40 @@ public class TeamServiceImpl implements TeamService
 	//// groupe.getAgentList().remove(agent);
 	//// }
 	//// }
-	
+
 	@Override
-	public Team getGroupe(long id)
-	{
+	public Team getGroupe(long id) {
 		// TODO Auto-generated method stub
 		return teamRepository.findOne(id);
 	}
-	
+
 	@Override
-	public List<Team> getAllGroupes()
-	{
+	public List<Team> getAllGroupes() {
 		// TODO Auto-generated method stub
 		return teamRepository.findAll();
 	}
-	
+
 	@Override
-	public void deleteGroupe(long id)
-	{
+	public void deleteGroupe(long id) {
 		// TODO Auto-generated method stub
 		teamRepository.delete(id);
 	}
-	
+
 	@Override
-	public Set<AccessAccount> ajouterAccount(Team team,
-			AccessAccount accessAccount)
-	{
-		if (!accountAffectee(team, accessAccount))
-		{
+	public Set<AccessAccount> ajouterAccount(Team team, AccessAccount accessAccount) {
+		if (!accountAffectee(team, accessAccount)) {
 			team.getAccounts().add(accessAccount);
 			teamRepository.save(team);
 		}
 		return team.getAccounts();
-		
+
+	}
+
+	@Override
+	public void removeAccess(Team team, AccessAccount accessAccount) {
+		if (accountAffectee(team, accessAccount)) {
+			team.getAccounts().remove(accessAccount);
+			teamRepository.save(team);
+		}
 	}
 }

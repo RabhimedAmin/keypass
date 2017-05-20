@@ -52,7 +52,11 @@ public class Resource
 	
 	@CreatedDate
 	@Column(name = "creation_date")
+	//@JsonSerialize(using = LocalDateTimeSerializer.class)
+	//@DateTimeFormat(iso=ISO.DATE_TIME)
+	//@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime creationDate;
+	
 	
 	@LastModifiedDate
 	@Column(name = "modif_date")

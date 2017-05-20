@@ -16,54 +16,46 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Service.TeamService;
-import com.example.model.AccessAccount;
 import com.example.model.Member;
 import com.example.model.Team;
 
-@RestController("/groupes")
-@RequestMapping("/groupes")
-public class TeamController
-{
+@RestController("/Teams")
+@RequestMapping("/teams")
+public class TeamController {
 	@Autowired
 	private TeamService teamService;
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Team> getgroupeById(
-			@PathVariable("id") final Long groupeId)
-	{
+	public ResponseEntity<Team> getgroupeById(@PathVariable("id") final Long groupeId) {
 		Team searchedgroupe = teamService.getGroupe(groupeId);
 		return new ResponseEntity<>(searchedgroupe, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Team>> getAllgroupe()
-	{
+	public ResponseEntity<List<Team>> getAllgroupe() {
 		List<Team> searchedgroupe = teamService.getAllGroupes();
 		return new ResponseEntity<>(searchedgroupe, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
-	public String creategroupe(@RequestBody Team team)
-	{
+	public String creategroupe(@RequestBody Team team) {
 		teamService.createGroupe(team);
-		return "redirect:/groupe/" + team.getId();
+		return "redirect:/Team/" + team.getId();
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public String update(Team team)
-	{
+	public String update(Team team) {
 		teamService.modifyGroupe(team);
-		return "redirect:/groupe/" + team.getId();
-		
+		return "redirect:/Team/" + team.getId();
+
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public String delete(@PathVariable Long id)
-	{
+	public String delete(@PathVariable Long id) {
 		teamService.deleteGroupe(id);
-		return "redirect:/groupes";
+		return "redirect:/Teams";
 	}
-	
+
 	// @RequestMapping(value = ("/{id}/addAgent"), method = RequestMethod.POST)
 	// public String affecteAgentToGroupe(
 	// @PathVariable("id") Groupe groupe, @RequestBody List<Agent> agents)
@@ -72,31 +64,20 @@ public class TeamController
 	//
 	// return "redirect:/groupes";
 	// }
-	
-	@RequestMapping(value = ("team /{id_team}/account/{id_account}"), method = RequestMethod.POST)
-	public ResponseEntity<?> affecteAccountToGroupe(
-			@PathVariable("id_team") Team team, @PathVariable ("id_account") AccessAccount accessAccount)
-	{
-		teamService.ajouterAccount(team, accessAccount);
-		
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-	
+
 	@RequestMapping(value = "/member/{id_member}", method = RequestMethod.DELETE)
-	public String deleteAgentFromGroupe(@PathVariable ("id_member")Member member)
-	{
+	public String deleteAgentFromGroupe(@PathVariable("id_member") Member member) {
 		teamService.supprimerAgent(member);
-		return "redirect:/groupes";
+		return "redirect:/member/" + member.getId();
 	}
-	
-	@RequestMapping(value = "team/{id_team}/member/{id_member}", method = POST, produces=APPLICATION_JSON_VALUE)
-	public String ajoutAgentToGroupe(@PathVariable("id_team") Team team, @PathVariable("id_member") Member member)
-	{
+
+	@RequestMapping(value = "team/{id_team}/member/{id_member}", method = POST, produces = APPLICATION_JSON_VALUE)
+	public String ajoutAgentToGroupe(@PathVariable("id_team") Team team, @PathVariable("id_member") Member member) {
 		Assert.notNull(member, "member not found");
 		Assert.notNull(team, "team not found");
 		teamService.memberToTeam(team, member);
-		
-		return "redirect:/groupes";
+
+		return "redirect:/Teams/" + team.getId() + "/member" + member.getId();
 	}
 	// @RequestMapping(value = ("/"), method = RequestMethod.POST)
 	// public ResponseEntity<?> affecteAccountToGroupe(

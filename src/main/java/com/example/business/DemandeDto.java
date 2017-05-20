@@ -7,8 +7,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.example.model.Request;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 
 import lombok.Data;
 
@@ -30,7 +28,7 @@ public class DemandeDto implements Serializable
 	private Long id_Approver;
 	
 	//@JsonFormat(pattern="yy-mm-dd HH:mm:ss")
-	@JsonDeserialize(using= LocalDateTimeDeserializer.class)
+//	@JsonDeserialize(using= LocalDateTimeDeserializer.class)
 	private LocalDateTime expiryDate;
 	
 	private Long id_resource;

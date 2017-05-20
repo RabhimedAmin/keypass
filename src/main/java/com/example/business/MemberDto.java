@@ -20,6 +20,8 @@ public class MemberDto implements Serializable
 	
 	private String email;
 	
+	private boolean isAdmin;
+	
 	private Long profileAutoritiesId;
 	
 	public MemberDto()
@@ -34,6 +36,7 @@ public class MemberDto implements Serializable
 		model.setFunction(this.function);
 		model.setPassword(this.password);
 		model.setEmail(this.email);
+		model.setIsAdmin(this.isAdmin);
 		
 		return model;
 	}

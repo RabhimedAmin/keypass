@@ -3,6 +3,7 @@ package com.example.Service;
 import java.util.List;
 
 import com.example.model.Member;
+import com.example.model.ProfileAuthorities;
 import com.example.model.Resource;
 
 public interface MemberService
@@ -23,5 +24,11 @@ public interface MemberService
 	void deleteResourceManager(Member member, Resource resource);
 	
 	public Member createNewMember(Member model, Long profileAutoritiesId);
+
+	int numberOfResources(Long id);
+
+	Member modifyAuthoritie(Member member, ProfileAuthorities profile);
+
+
 	
 }
